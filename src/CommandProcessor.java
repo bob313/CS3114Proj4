@@ -12,6 +12,7 @@ import java.util.Scanner;
  */
 
 public class CommandProcessor {
+    private SkipList skiplist;
 
     /**
      * 
@@ -28,6 +29,7 @@ public class CommandProcessor {
      */
     public CommandProcessor(String hashSize, String file) {
         Scanner scan = null;
+        skiplist = new SkipList();
         try {
             scan = new Scanner(new File(file));
         }
@@ -56,7 +58,8 @@ public class CommandProcessor {
         // Analyze the input string and figure out which command
         String[] inputs = commandString.trim().split("\\s+");
         if (inputs[0].equals("add")) {
-            if (add(commandString)) {
+            if (find(commandString)) {
+                add(commandString.replaceFirst("add", ""));
                 System.out.println(inputs[1] + " has been added to the database");
             }
             return true;
@@ -82,6 +85,22 @@ public class CommandProcessor {
     }
 
     /**
+     * Handles the find command
+     * 
+     * @param findCommand
+     *            find command string
+     * @return
+     *         true if proper rating
+     */
+    private boolean find(String findCommand) {
+        String[] inputs = findCommand.trim().split("\\s+");
+        if (skiplist.find(inputs[2]) == null) {
+            return true;
+        }
+        return false;
+    }
+    
+    /**
      * Handles the add command
      * 
      * @param addCommand
@@ -90,9 +109,9 @@ public class CommandProcessor {
      *         true if proper rating
      */
     private boolean add(String addCommand) {
-        String name = addCommand.replaceFirst("add", "");
-        String[] inputs = name.trim().split("\\s+");
-        return true;
+        String[] inputs = addCommand.trim().split("\\s+");
+        skiplist.insert(inputs[0]);
+        return false;
     }
 
 
