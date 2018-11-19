@@ -1,29 +1,19 @@
 
-public class KVPair {
-    private Comparable key;
+public class KVPair<T extends Comparable<T>> {
     private Object value;
-    
-    
-    public KVPair(Comparable key2, Object elem) {
+    private Comparable<T> key;
+
+    public KVPair(Comparable<T> key2, Object elem) {
+        value = elem;
         key = key2;
-        
     }
 
-
-    public Object getValue() { 
-        // TODO Auto-generated method stub
+    public Object value() {
         return value;
     }
 
-
-    public Comparable getKey() {
-        // TODO Auto-generated method stub
+    public Comparable<T> key() {
         return key;
     }
-
-
-    
-    
-    
 
 }
