@@ -17,6 +17,9 @@ public class KVPair<T extends Comparable<T>> {
     }
 
     public String toString() {
-        return key.toString() + " " + value.toString();
+        if (value != null) {
+            return value.toString();
+        }
+        return "null";
     }
 }
