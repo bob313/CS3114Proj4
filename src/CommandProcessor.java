@@ -65,7 +65,13 @@ public class CommandProcessor {
             return true;
         }
         else if (inputs[0].equals("delete")) {
-                delete(commandString);
+            if (find(commandString)) {
+                delete(commandString.replaceFirst("delete", ""));
+                System.out.println("Deleted |" + inputs[1] + "| from the database");
+            }
+            else {
+                System.out.println("Object |" + inputs[1] + "| not in the database");
+            }
             return true;
         }
         else if (inputs[0].equals("print")) {
@@ -94,7 +100,7 @@ public class CommandProcessor {
      */
     private boolean find(String findCommand) {
         String[] inputs = findCommand.trim().split("\\s+");
-        if (skiplist.find(inputs[2]) == null) {
+        if (skiplist.find(inputs[2]) != null) {
             return true;
         }
         return false;
@@ -108,10 +114,9 @@ public class CommandProcessor {
      * @return
      *         true if proper rating
      */
-    private boolean add(String addCommand) {
+    private void add(String addCommand) {
         String[] inputs = addCommand.trim().split("\\s+");
         skiplist.insert(inputs[0]);
-        return false;
     }
 
 
@@ -122,14 +127,8 @@ public class CommandProcessor {
      *            delete command string
      */
     private void delete(String deleteCommand) {
-        String name = deleteCommand.replaceFirst("delete", "");
-        String[] inputs = name.trim().split("\\s+");
-        if (false) {
-            System.out.println("Deleted |" + inputs[0] + "| from the database");
-        }
-        else {
-            System.out.println("Object |" + inputs[0] + "| not in the database");
-        }
+        String[] inputs = deleteCommand.trim().split("\\s+");
+        skiplist.delete(inputs[0]);
     }
 
     /**
