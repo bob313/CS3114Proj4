@@ -12,7 +12,7 @@ import java.util.Scanner;
  */
 
 public class CommandProcessor {
-    private SkipList<AirObject> skiplist;
+    private SkipList<KVPair> skiplist;
 
     /**
      * 
@@ -59,7 +59,7 @@ public class CommandProcessor {
         String[] inputs = commandString.trim().split("\\s+");
         if (inputs[0].equals("add")) {
             commandString.replaceFirst("add", "");
-            if (find(commandString)) {
+            if (!find(commandString)) {
                 add(commandString);
                 System.out.println(inputs[1] + " has been added to the database");
             }
@@ -101,7 +101,7 @@ public class CommandProcessor {
      */
     private boolean find(String findCommand) {
         String[] inputs = findCommand.trim().split("\\s+");
-        AirObject obj = new AirObject(inputs[1]);
+        AirObject obj = new AirObject(inputs[1], inputs[2], inputs[3], inputs[4], inputs[5], inputs[6], inputs[7], inputs[8]);
         if (skiplist.find(obj) != null) {
             return true;
         }
@@ -118,7 +118,7 @@ public class CommandProcessor {
      */
     private void add(String addCommand) {
         String[] inputs = addCommand.trim().split("\\s+");
-        AirObject obj = new AirObject(inputs[0]);
+        AirObject obj = new AirObject(inputs[0], inputs[1], inputs[2], inputs[3], inputs[4], inputs[5], inputs[6], inputs[7]);
         skiplist.insert(obj, obj);
     }
 
@@ -131,8 +131,7 @@ public class CommandProcessor {
      */
     private void delete(String deleteCommand) {
         String[] inputs = deleteCommand.trim().split("\\s+");
-        AirObject obj = new AirObject(inputs[0]);
-        skiplist.delete(obj);
+        skiplist.delete(skiplist.find(key));
     }
 
     /**

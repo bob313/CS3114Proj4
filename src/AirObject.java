@@ -9,7 +9,14 @@
  */
 
 public class AirObject implements Comparable<AirObject> {
+    private String obj;
     private String name; // Name for this AirObject
+    private int xOrig;
+    private int yOrig;
+    private int zOrig;
+    private int xWidth;
+    private int yWidth;
+    private int zWidth;
 
 
     /**
@@ -19,8 +26,34 @@ public class AirObject implements Comparable<AirObject> {
      *            The object's name
      *
      */
-    public AirObject(String inname) {
+    public AirObject(
+        String object,
+        String inname,
+        String xorig,
+        String yorig,
+        String zorig,
+        String xwidth,
+        String ywidth,
+        String zwidth) {
+        obj = object;
         name = inname;
+        xOrig = Integer.parseInt(xorig);
+        yOrig = Integer.parseInt(yorig);
+        zOrig = Integer.parseInt(zorig);
+        xWidth = Integer.parseInt(xwidth);
+        yWidth = Integer.parseInt(ywidth);
+        zWidth = Integer.parseInt(zwidth);
+
+    }
+
+
+    /**
+     * Gets the object type
+     * 
+     * @return the type of object
+     */
+    public String getObject() {
+        return obj;
     }
 
 
@@ -30,7 +63,7 @@ public class AirObject implements Comparable<AirObject> {
      * @return x origin
      */
     public int getXorig() {
-        return 0;
+        return xOrig;
     }
 
 
@@ -40,7 +73,7 @@ public class AirObject implements Comparable<AirObject> {
      * @return x width
      */
     public int getXwidth() {
-        return 0;
+        return xWidth;
     }
 
 
@@ -50,7 +83,7 @@ public class AirObject implements Comparable<AirObject> {
      * @return y origin
      */
     public int getYorig() {
-        return 0;
+        return yOrig;
     }
 
 
@@ -61,7 +94,7 @@ public class AirObject implements Comparable<AirObject> {
      */
 
     public int getYwidth() {
-        return 0;
+        return yWidth;
     }
 
 
@@ -71,7 +104,7 @@ public class AirObject implements Comparable<AirObject> {
      * @return z origin
      */
     public int getZorig() {
-        return 0;
+        return zOrig;
     }
 
 
@@ -82,7 +115,7 @@ public class AirObject implements Comparable<AirObject> {
      */
 
     public int getZwidth() {
-        return 0;
+        return zWidth;
     }
 
 
