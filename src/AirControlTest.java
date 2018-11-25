@@ -25,8 +25,8 @@ public class AirControlTest extends TestCase {
      * Get code coverage for AirObject class
      */
     public void testAO() {
-        AirObject ao = new AirObject("myName", "0", "0", "0", "1", "1", "1");
-        AirObject ao2 = new AirObject("myName2", "1", "2", "3", "1", "2", "3");
+        AirObject ao = new AirObject("airplane", "myName", "0", "0", "0", "1", "1", "1");
+        AirObject ao2 = new AirObject("airplane", "myName2", "1", "2", "3", "1", "2", "3");
         assertTrue((ao.getName()).equals("myName"));
         assertEquals(ao.getXorig(), 0);
         assertEquals(ao.getYorig(), 0);

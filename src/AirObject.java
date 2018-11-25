@@ -43,7 +43,6 @@ public class AirObject implements Comparable<AirObject> {
         xWidth = Integer.parseInt(xwidth);
         yWidth = Integer.parseInt(ywidth);
         zWidth = Integer.parseInt(zwidth);
-
     }
 
 
@@ -139,5 +138,10 @@ public class AirObject implements Comparable<AirObject> {
      */
     public int compareTo(AirObject it) {
         return name.compareTo(it.getName());
+    }
+    
+    @Override
+    public String toString() {
+        return (obj + " " + name + " " + xOrig + " " + yOrig + " " + zOrig + " " + xWidth + " " + yWidth + " " + zWidth);
     }
 }

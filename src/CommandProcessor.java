@@ -12,7 +12,7 @@ import java.util.Scanner;
  */
 
 public class CommandProcessor {
-    private SkipList<KVPair> skiplist;
+    private SkipList<String> skiplist;
 
     /**
      * 
@@ -29,7 +29,7 @@ public class CommandProcessor {
      */
     public CommandProcessor(String file) {
         Scanner scan = null;
-        skiplist = new SkipList<AirObject>();
+        skiplist = new SkipList<String>();
         try {
             scan = new Scanner(new File(file));
         }
@@ -58,7 +58,7 @@ public class CommandProcessor {
         // Analyze the input string and figure out which command
         String[] inputs = commandString.trim().split("\\s+");
         if (inputs[0].equals("add")) {
-            commandString.replaceFirst("add", "");
+            commandString = commandString.replaceFirst("add", "");
             if (!find(commandString)) {
                 add(commandString);
                 System.out.println(inputs[1] + " has been added to the database");
@@ -67,7 +67,7 @@ public class CommandProcessor {
         }
         else if (inputs[0].equals("delete")) {
             if (find(commandString)) {
-                delete(commandString.replaceFirst("delete", ""));
+                delete(commandString);
                 System.out.println("Deleted |" + inputs[1] + "| from the database");
             }
             else {
@@ -101,8 +101,7 @@ public class CommandProcessor {
      */
     private boolean find(String findCommand) {
         String[] inputs = findCommand.trim().split("\\s+");
-        AirObject obj = new AirObject(inputs[1], inputs[2], inputs[3], inputs[4], inputs[5], inputs[6], inputs[7], inputs[8]);
-        if (skiplist.find(obj) != null) {
+        if (skiplist.find(inputs[1]) != null) {
             return true;
         }
         return false;
@@ -119,7 +118,7 @@ public class CommandProcessor {
     private void add(String addCommand) {
         String[] inputs = addCommand.trim().split("\\s+");
         AirObject obj = new AirObject(inputs[0], inputs[1], inputs[2], inputs[3], inputs[4], inputs[5], inputs[6], inputs[7]);
-        skiplist.insert(obj, obj);
+        skiplist.insert(inputs[1], obj);
     }
 
 
@@ -131,7 +130,8 @@ public class CommandProcessor {
      */
     private void delete(String deleteCommand) {
         String[] inputs = deleteCommand.trim().split("\\s+");
-        skiplist.delete(skiplist.find(key));
+        System.out.println(deleteCommand);
+        skiplist.delete(inputs[1]);
     }
 
     /**
@@ -149,6 +149,7 @@ public class CommandProcessor {
             System.out.println("Bintree dump:");
         }
         else if (inputs[1].equals("object")) {
+            printCommand = printCommand.replaceFirst("object", "");
             if (!find(printCommand)) {
                 System.out.println("|" + inputs[2] + "| does not exist in the database");
             }
