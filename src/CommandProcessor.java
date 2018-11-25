@@ -117,7 +117,22 @@ public class CommandProcessor {
      */
     private void add(String addCommand) {
         String[] inputs = addCommand.trim().split("\\s+");
-        AirObject obj = new AirObject(inputs[0], inputs[1], inputs[2], inputs[3], inputs[4], inputs[5], inputs[6], inputs[7]);
+        AirObject obj;
+        if (inputs[0] == "airplane") {
+            obj = new Airplane(inputs[0], inputs[1], inputs[2], inputs[3], inputs[4], inputs[5], inputs[6], inputs[7], inputs[8], inputs[9], inputs[10]);
+        }
+        else if (inputs[0] == "balloon") {
+            obj = new Balloon(inputs[0], inputs[1], inputs[2], inputs[3], inputs[4], inputs[5], inputs[6], inputs[7], inputs[8], inputs[9]);
+        }
+        else if (inputs[0] == "rocket") {
+            obj = new Rocket(inputs[0], inputs[1], inputs[2], inputs[3], inputs[4], inputs[5], inputs[6], inputs[7], inputs[8], inputs[9]);
+        }
+        else if (inputs[0] == "drone") {
+            obj = new Drone(inputs[0], inputs[1], inputs[2], inputs[3], inputs[4], inputs[5], inputs[6], inputs[7], inputs[8], inputs[9]);
+        }
+        else {
+            obj = new Bird(inputs[0], inputs[1], inputs[2], inputs[3], inputs[4], inputs[5], inputs[6], inputs[7], inputs[8], inputs[9]);
+        }
         skiplist.insert(inputs[1], obj);
     }
 

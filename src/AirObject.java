@@ -140,8 +140,11 @@ public class AirObject implements Comparable<AirObject> {
         return name.compareTo(it.getName());
     }
     
-    @Override
-    public String toString() {
-        return (obj + " " + name + " " + xOrig + " " + yOrig + " " + zOrig + " " + xWidth + " " + yWidth + " " + zWidth);
+    /**
+     * Returns a string containing fields
+     */
+    public String string() {
+        return (this.getObject() + " " + this.getName() + " " + this.getXorig() + " " + this.getYorig() + " " + this.getZorig() + " " + this.getXwidth() + " " + this.getYwidth() + " " + this.getZwidth());
     }
+    
 }
