@@ -1,5 +1,13 @@
 import java.util.Random;
 
+/**
+ * Skip List class for comparable T
+ * 
+ * @author Christian Carminucci <cdc97> Bob Bao <bob313>
+ * @version 11/20/2018
+ * @param <T>
+ *            a comparable type
+ */
 class SkipList<T extends Comparable<T>> {
     private SkipNode<T> head;
     private int level;
@@ -27,7 +35,7 @@ class SkipList<T extends Comparable<T>> {
     public Object find(T key) {
         SkipNode<T> x = head; // Dummy header node
         for (int i = level; i >= 0; i--) { // For each level...
-            while ((x.getForward()[i] != null) && (x.getForward()[i].key() 
+            while ((x.getForward()[i] != null) && (x.getForward()[i].key()
                 .compareTo(key) < 0)) { // go forward
                 x = x.getForward()[i]; // Go one last step
             }
@@ -98,18 +106,20 @@ class SkipList<T extends Comparable<T>> {
             head.getForward()[i] = temp.getForward()[i];
         level = newLevel;
     }
-    
-    
+
+
     /**
      * Deletes a node from the skip list
-     * @param key the key of the object to be deleted
+     * 
+     * @param key
+     *            the key of the object to be deleted
      */
     @SuppressWarnings("unchecked")
     public void delete(T key) {
         SkipNode<T>[] upList = new SkipNode[level + 1];
         SkipNode<T> x = head;
         for (int i = level; i >= 0; i--) { // For each level...
-            while ((x.getForward()[i] != null) && (x.getForward()[i].key() 
+            while ((x.getForward()[i] != null) && (x.getForward()[i].key()
                 .compareTo(key) < 0)) { // go forward
                 x = x.getForward()[i]; // Go one last step
             }
@@ -117,12 +127,14 @@ class SkipList<T extends Comparable<T>> {
         }
         for (int i = level; i >= 0; i--) {
             if (upList[i] != null && upList[i].getForward()[i] != null) {
-                upList[i].getForward()[i] = upList[i].getForward()[i].getForward()[i];
+                upList[i].getForward()[i] = upList[i].getForward()[i]
+                    .getForward()[i];
             }
         }
         size--;
     }
-    
+
+
     /**
      * Prints the elements of the skip list
      */
@@ -141,5 +153,5 @@ class SkipList<T extends Comparable<T>> {
         }
         System.out.println(size + " skiplist nodes printed");
     }
-    
+
 }
