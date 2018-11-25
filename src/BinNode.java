@@ -4,6 +4,9 @@
  * @version nov 25
  *
  */
-public class Node {
+public class BinNode {
+    public BinNode() {
+        
+    }
 
 }

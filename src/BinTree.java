@@ -12,6 +12,7 @@ public class BinTree {
     private static LeafNode EMPT_LEAF = new LeafNode();
     private int level;
 
+
     /**
      * initialize 3d BinTree
      */
@@ -20,11 +21,11 @@ public class BinTree {
     }
 
 
-   public void insert(AirObject obj, BinNode curr) {
-        BinNode cur = curr;
+    public void insert(AirObject obj, LeafNode curr) {
+        LeafNode cur = curr;
         boolean isRoot = false;
-        if (cur ==  null) {
-            cur = root;
+        if (cur == null) {
+            root = curr;
             isRoot = true;
         }
         if (cur == EMPT_LEAF) {
@@ -37,8 +38,7 @@ public class BinTree {
         if (cur.size() < 3) {
             cur.insert(obj);
         }
-        
-        
+
     }
 
 

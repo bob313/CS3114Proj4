@@ -195,7 +195,8 @@ public class CommandProcessor {
                     + "| does not exist in the database");
             }
             else {
-                System.out.println("Found: Drone " + inputs[2]);
+                System.out.println("Found: " + skiplist.find(inputs[2])
+                    .toString());
             }
         }
     }
@@ -209,11 +210,14 @@ public class CommandProcessor {
      */
     private void rangeprint(String rangeprintCommand) {
         String[] inputs = rangeprintCommand.trim().split("\\s+");
-        if (inputs[1].compareTo(inputs[2]) > 1) {
-        System.out.println("Found these records in the range |" + inputs[1] + "| to |" + inputs[2] + "|");
+        if (inputs[1].compareTo(inputs[2]) <= 0) {
+            System.out.println("Found these records in the range |" + inputs[1]
+                + "| to |" + inputs[2] + "|");
+            skiplist.rangePrint(inputs[1], inputs[2]);
         }
         else {
-            System.out.println("Error in rangeprint parameters: |" + inputs[2] + "| is not less than |" +inputs[1]+ "|");
+            System.out.println("Error in rangeprint parameters: |" + inputs[1]
+                + "| is not less than |" + inputs[2] + "|");
         }
     }
 

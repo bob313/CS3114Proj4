@@ -4,7 +4,7 @@
      * @author bob313 cdc97
      *
      */
-    public class LeafNode extends Node{
+    public class LeafNode extends BinNode{
         private AirObject box1;
         private AirObject box2;
         private AirObject box3;
@@ -16,7 +16,7 @@
          * @param object
          *            is the airobject
          */
-        private LeafNode() {
+        public LeafNode() {
             box1 = null;
             box2 = null;
             box3 = null;
@@ -30,7 +30,7 @@
          *            is airobject value
          */
         public boolean insert(AirObject obj) {
-            if (getCount() < 3) {
+            if (size() < 3) {
                 if (box1 == null && !intersect(obj, box1)) {
                     box1 = obj;
                     return true;
@@ -63,7 +63,7 @@
          * 
          * @return how many objects in leaf node
          */
-        public int getCount() {
+        public int size() {
             int sum = 0;
             if (box1 != null) {
                 sum++;
