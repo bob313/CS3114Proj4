@@ -32,9 +32,11 @@
 public class AirControl {
     /**
      * @param args
-     *     Command line parameters
+     *            Command line parameters
      */
     public static void main(String[] args) {
-        
+        if (args != null) {
+            new CommandProcessor(args[0]);
+        }
     }
 }

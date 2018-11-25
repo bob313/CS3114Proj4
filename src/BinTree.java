@@ -6,7 +6,9 @@
  *
  */
 public class BinTree {
-    private Node root;
+    private LeafNode root;
+    private LeafNode empty;
+    private InnerNode innerRoot;
 
 
     /**
@@ -16,7 +18,9 @@ public class BinTree {
      *
      */
     private static class LeafNode {
-        private AirObject obj;
+        private AirObject box1;
+        private AirObject box2;
+        private AirObject box3;
 
 
         /**
@@ -26,7 +30,9 @@ public class BinTree {
          *            is the airobject
          */
         private LeafNode() {
-            obj = null;
+            box1 = null;
+            box2 = null;
+            box3 = null;
         }
 
 
@@ -36,8 +42,22 @@ public class BinTree {
          * @param object
          *            is airobject value
          */
-        public void insert(AirObject object) {
-            obj = object;
+        public boolean insert(AirObject obj) {
+            if (getCount() < 3) {
+                if (box1 == null && !intersect(obj, box1)) {
+                    box1 = obj;
+                    return true;
+                }
+                else if (box2 == null && !intersect(obj, box2)) {
+                    box2 = obj;
+                    return true;
+                }
+                else if (box3 == null && !intersect(obj, box3)) {
+                    box3 = obj;
+                    return true;
+                }
+            }
+            return false;
         }
 
 
@@ -47,7 +67,38 @@ public class BinTree {
          * @return true if leaf node is not null
          */
         public boolean getObj() {
-            return (obj != null);
+            return (box1 != null || box2 != null || box3 != null);
+        }
+
+
+        /**
+         * checks how many objects in leaf node
+         * 
+         * @return how many objects in leaf node
+         */
+        public int getCount() {
+            int sum = 0;
+            if (box1 != null) {
+                sum++;
+            }
+            if (box2 != null) {
+                sum++;
+            }
+            if (box3 != null) {
+                sum++;
+            }
+            return sum;
+        }
+
+
+        /**
+         * 
+         * @param obj
+         *            is the airobject to check if there is an intersection
+         * @return true if it does intersect
+         */
+        public boolean intersect(AirObject obj, AirObject box) {
+            return true;
         }
 
     }
@@ -60,21 +111,17 @@ public class BinTree {
      * @version nov 21
      */
     private static class InnerNode {
-        private LeafNode upleft;
-        private LeafNode upright;
-        private LeafNode downleft;
-        private LeafNode downright;
+        private LeafNode left;
+        private LeafNode right;
 
 
         /**
          * creates inner Node
          * 
          */
-        private InnerNode() {
-            upleft = null;
-            upright = null;
-            downleft = null;
-            downright = null;
+        private InnerNode(LeafNode empty) {
+            left = empty;
+            right = empty;
         }
     }
 
@@ -89,11 +136,15 @@ public class BinTree {
 
     public void insert(AirObject obj) {
         if (root == null) {
-            root = new Node(obj);
         }
         else {
 
         }
+    }
+
+
+    public void print() {
+
     }
 
 }

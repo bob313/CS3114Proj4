@@ -12,7 +12,7 @@ import java.util.Scanner;
  */
 
 public class CommandProcessor {
-    private SkipList skiplist;
+    private SkipList<AirObject> skiplist;
 
     /**
      * 
@@ -27,9 +27,9 @@ public class CommandProcessor {
      *            processed
      * 
      */
-    public CommandProcessor(String hashSize, String file) {
+    public CommandProcessor(String file) {
         Scanner scan = null;
-        skiplist = new SkipList();
+        skiplist = new SkipList<AirObject>();
         try {
             scan = new Scanner(new File(file));
         }
@@ -58,8 +58,9 @@ public class CommandProcessor {
         // Analyze the input string and figure out which command
         String[] inputs = commandString.trim().split("\\s+");
         if (inputs[0].equals("add")) {
+            commandString.replaceFirst("add", "");
             if (find(commandString)) {
-                add(commandString.replaceFirst("add", ""));
+                add(commandString);
                 System.out.println(inputs[1] + " has been added to the database");
             }
             return true;
@@ -79,13 +80,13 @@ public class CommandProcessor {
             return true;
         }
         else if (inputs[0].equals("rangeprint")) {
-            rangeprint(commandString.replaceFirst("rangeprint", ""));
+            rangeprint(commandString);
         }
         else if (inputs[0].equals("collisions")) {
-            collisions(commandString.replaceFirst("collisions", ""));
+            collisions(commandString);
         }
         else if (inputs[0].equals("intersect")) {
-            intersect(commandString.replaceFirst("intersect", ""));
+            intersect(commandString);
         }
         return false;
     }
@@ -100,7 +101,8 @@ public class CommandProcessor {
      */
     private boolean find(String findCommand) {
         String[] inputs = findCommand.trim().split("\\s+");
-        if (skiplist.find(inputs[2]) != null) {
+        AirObject obj = new AirObject(inputs[1]);
+        if (skiplist.find(obj) != null) {
             return true;
         }
         return false;
@@ -116,7 +118,8 @@ public class CommandProcessor {
      */
     private void add(String addCommand) {
         String[] inputs = addCommand.trim().split("\\s+");
-        skiplist.insert(inputs[0]);
+        AirObject obj = new AirObject(inputs[0]);
+        skiplist.insert(obj, obj);
     }
 
 
@@ -128,7 +131,8 @@ public class CommandProcessor {
      */
     private void delete(String deleteCommand) {
         String[] inputs = deleteCommand.trim().split("\\s+");
-        skiplist.delete(inputs[0]);
+        AirObject obj = new AirObject(inputs[0]);
+        skiplist.delete(obj);
     }
 
     /**
@@ -140,13 +144,13 @@ public class CommandProcessor {
     private void print(String printCommand) {
         String[] inputs = printCommand.trim().split("\\s+");
         if (inputs[1].equals("skiplist")) {
-            System.out.println("SkipList dump:");
+            skiplist.print();
         }
         else if (inputs[1].equals("bintree")) {
             System.out.println("Bintree dump:");
         }
         else if (inputs[1].equals("object")) {
-            if (false) {
+            if (!find(printCommand)) {
                 System.out.println("|" + inputs[2] + "| does not exist in the database");
             }
             else {

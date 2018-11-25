@@ -1,4 +1,9 @@
-
+/**
+ * 
+ * @author bob313 cdc97
+ *
+ * @param <T>
+ */
 public class KVPair<T extends Comparable<T>> {
     private Object value;
     private Comparable<T> key;

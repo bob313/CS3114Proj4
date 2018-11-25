@@ -36,4 +36,15 @@ public class AirControlTest extends TestCase {
         assertEquals(ao.getZwidth(), 0);
         assertTrue(ao.compareTo(ao2) < 0);
     }
+    
+    /**
+     * Get code coverage of the class declaration.
+     */
+    public void testSample() {
+        AirControl recstore = new AirControl();
+        assertNotNull(recstore);
+        AirControl.main(null);
+        String[] trial = { "P4SampleInput.txt" };
+        AirControl.main(trial);
+    }
 }
