@@ -154,4 +154,22 @@ class SkipList<T extends Comparable<T>> {
         System.out.println(size + " skiplist nodes printed");
     }
 
+    /**
+     * Prints given range from the skip list in order
+     * @param keyStart start of range
+     * @param keyEnd end of range
+     */
+    public void rangePrint(T keyStart, T keyEnd) {
+        SkipNode<T> x = head;
+        for (int i = level; i >= 0; i--) { // For each level...
+            while ((x.getForward()[i] != null) && (x.getForward()[i].key()
+                .compareTo(keyStart) < 0)) { // go forward
+                x = x.getForward()[i]; // Go one last step
+            }
+        }
+        while ( x != null && x.getForward()[0].key().compareTo(keyEnd) < 0) {
+            System.out.println(x.toString());
+            x = x.getForward()[0];
+        }
+    }
 }
