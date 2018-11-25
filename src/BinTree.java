@@ -6,10 +6,11 @@
  *
  */
 public class BinTree {
-    private static LeafNode empty;
-    private Node root;
-    private InnerNode innerRoot;
 
+    private static int MAX_DEM = 1024;
+    private BinNode root;
+    private static LeafNode EMPT_LEAF = new LeafNode();
+    private int level;
 
     /**
      * initialize 3d BinTree
@@ -19,12 +20,25 @@ public class BinTree {
     }
 
 
-    public void insert(AirObject obj) {
-        if (root == null) {
+   public void insert(AirObject obj, BinNode curr) {
+        BinNode cur = curr;
+        boolean isRoot = false;
+        if (cur ==  null) {
+            cur = root;
+            isRoot = true;
         }
-        else {
-
+        if (cur == EMPT_LEAF) {
+            cur = new LeafNode();
+            cur.insert(obj);
+            if (isRoot) {
+                root = cur;
+            }
         }
+        if (cur.size() < 3) {
+            cur.insert(obj);
+        }
+        
+        
     }
 
 
