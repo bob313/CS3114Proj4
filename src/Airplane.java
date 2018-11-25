@@ -9,6 +9,7 @@ public class Airplane extends AirObject {
     private int fli;
     private int eng;
 
+
     /**
      * 
      * @param object
@@ -30,7 +31,9 @@ public class Airplane extends AirObject {
      * @param carrier
      *            type of aircraft
      * @param flight
-     *            flight
+     *            flight number
+     * @param engine
+     *            number of engines
      */
     public Airplane(
         String object,
@@ -49,9 +52,40 @@ public class Airplane extends AirObject {
         fli = Integer.parseInt(flight);
         eng = Integer.parseInt(engine);
     }
-    
+
+
     @Override
+    /**
+     * @return the string
+     */
     public String toString() {
         return (string() + " " + carr + " " + fli + " " + eng);
+    }
+
+
+    /**
+     * 
+     * @return the carrier type
+     */
+    public String getCarrier() {
+        return carr;
+    }
+
+
+    /**
+     * 
+     * @return the fight number
+     */
+    public int getFlight() {
+        return fli;
+    }
+
+
+    /**
+     * 
+     * @return number of engines
+     */
+    public int getEngines() {
+        return eng;
     }
 }

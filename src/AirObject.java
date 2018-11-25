@@ -144,7 +144,7 @@ public class AirObject implements Comparable<AirObject> {
      * Returns a string containing fields
      */
     public String string() {
-        return (this.getObject() + " " + this.getName() + " " + this.getXorig() + " " + this.getYorig() + " " + this.getZorig() + " " + this.getXwidth() + " " + this.getYwidth() + " " + this.getZwidth());
+        return (this.getObject().substring(0, 1).toUpperCase() + this.getObject().substring(1) + " " + this.getName() + " " + this.getXorig() + " " + this.getYorig() + " " + this.getZorig() + " " + this.getXwidth() + " " + this.getYwidth() + " " + this.getZwidth());
     }
     
 }

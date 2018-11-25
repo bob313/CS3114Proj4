@@ -14,6 +14,7 @@ import java.util.Scanner;
 public class CommandProcessor {
     private SkipList<String> skiplist;
 
+
     /**
      * 
      * Constructor for CommandProcessor. Takes inputs from main method and
@@ -61,17 +62,18 @@ public class CommandProcessor {
             commandString = commandString.replaceFirst("add", "");
             if (!find(commandString)) {
                 add(commandString);
-                System.out.println(inputs[1] + " has been added to the database");
             }
             return true;
         }
         else if (inputs[0].equals("delete")) {
             if (find(commandString)) {
                 delete(commandString);
-                System.out.println("Deleted |" + inputs[1] + "| from the database");
+                System.out.println("Deleted |" + inputs[1]
+                    + "| from the database");
             }
             else {
-                System.out.println("Object |" + inputs[1] + "| not in the database");
+                System.out.println("Object |" + inputs[1]
+                    + "| not in the database");
             }
             return true;
         }
@@ -91,6 +93,7 @@ public class CommandProcessor {
         return false;
     }
 
+
     /**
      * Handles the find command
      * 
@@ -106,7 +109,8 @@ public class CommandProcessor {
         }
         return false;
     }
-    
+
+
     /**
      * Handles the add command
      * 
@@ -117,23 +121,44 @@ public class CommandProcessor {
      */
     private void add(String addCommand) {
         String[] inputs = addCommand.trim().split("\\s+");
-        AirObject obj;
-        if (inputs[0] == "airplane") {
-            obj = new Airplane(inputs[0], inputs[1], inputs[2], inputs[3], inputs[4], inputs[5], inputs[6], inputs[7], inputs[8], inputs[9], inputs[10]);
+        if (!(inputs[5].equals("0") || inputs[6].equals("0") || inputs[7]
+            .equals("0"))) {
+            AirObject obj;
+            if (inputs[0].equals("airplane")) {
+                obj = new Airplane(inputs[0], inputs[1], inputs[2], inputs[3],
+                    inputs[4], inputs[5], inputs[6], inputs[7], inputs[8],
+                    inputs[9], inputs[10]);
+            }
+            else if (inputs[0].equals("balloon")) {
+                obj = new Balloon(inputs[0], inputs[1], inputs[2], inputs[3],
+                    inputs[4], inputs[5], inputs[6], inputs[7], inputs[8],
+                    inputs[9]);
+            }
+            else if (inputs[0].equals("rocket")) {
+                obj = new Rocket(inputs[0], inputs[1], inputs[2], inputs[3],
+                    inputs[4], inputs[5], inputs[6], inputs[7], inputs[8],
+                    inputs[9]);
+            }
+            else if (inputs[0].equals("drone")) {
+                obj = new Drone(inputs[0], inputs[1], inputs[2], inputs[3],
+                    inputs[4], inputs[5], inputs[6], inputs[7], inputs[8],
+                    inputs[9]);
+            }
+            else {
+                obj = new Bird(inputs[0], inputs[1], inputs[2], inputs[3],
+                    inputs[4], inputs[5], inputs[6], inputs[7], inputs[8],
+                    inputs[9]);
+            }
+            if (obj.getXorig() + obj.getXwidth() > 0 && obj.getXorig() + obj
+                .getXwidth() <= 1024 && obj.getYorig() + obj.getYwidth() > 0
+                && obj.getYorig() + obj.getYwidth() <= 1024 && obj.getZorig()
+                    + obj.getZwidth() > 0 && obj.getZorig() + obj
+                        .getZwidth() <= 1024) {
+                skiplist.insert(inputs[1], obj);
+                System.out.println(inputs[1]
+                    + " has been added to the database");
+            }
         }
-        else if (inputs[0] == "balloon") {
-            obj = new Balloon(inputs[0], inputs[1], inputs[2], inputs[3], inputs[4], inputs[5], inputs[6], inputs[7], inputs[8], inputs[9]);
-        }
-        else if (inputs[0] == "rocket") {
-            obj = new Rocket(inputs[0], inputs[1], inputs[2], inputs[3], inputs[4], inputs[5], inputs[6], inputs[7], inputs[8], inputs[9]);
-        }
-        else if (inputs[0] == "drone") {
-            obj = new Drone(inputs[0], inputs[1], inputs[2], inputs[3], inputs[4], inputs[5], inputs[6], inputs[7], inputs[8], inputs[9]);
-        }
-        else {
-            obj = new Bird(inputs[0], inputs[1], inputs[2], inputs[3], inputs[4], inputs[5], inputs[6], inputs[7], inputs[8], inputs[9]);
-        }
-        skiplist.insert(inputs[1], obj);
     }
 
 
@@ -145,9 +170,9 @@ public class CommandProcessor {
      */
     private void delete(String deleteCommand) {
         String[] inputs = deleteCommand.trim().split("\\s+");
-        System.out.println(deleteCommand);
         skiplist.delete(inputs[1]);
     }
+
 
     /**
      * handles the print commands
@@ -166,14 +191,16 @@ public class CommandProcessor {
         else if (inputs[1].equals("object")) {
             printCommand = printCommand.replaceFirst("object", "");
             if (!find(printCommand)) {
-                System.out.println("|" + inputs[2] + "| does not exist in the database");
+                System.out.println("|" + inputs[2]
+                    + "| does not exist in the database");
             }
             else {
                 System.out.println("Found: Drone " + inputs[2]);
             }
         }
     }
-    
+
+
     /**
      * handles the rangeprint commands
      * 
@@ -182,9 +209,15 @@ public class CommandProcessor {
      */
     private void rangeprint(String rangeprintCommand) {
         String[] inputs = rangeprintCommand.trim().split("\\s+");
-        System.out.println("Range print");
+        if (inputs[1].compareTo(inputs[2]) > 1) {
+        System.out.println("Found these records in the range |" + inputs[1] + "| to |" + inputs[2] + "|");
+        }
+        else {
+            System.out.println("Error in rangeprint parameters: |" + inputs[2] + "| is not less than |" +inputs[1]+ "|");
+        }
     }
-    
+
+
     /**
      * handles the collision commands
      * 
@@ -195,7 +228,8 @@ public class CommandProcessor {
         String[] inputs = collisionCommand.trim().split("\\s+");
         System.out.println("The following collisions exist in the database:");
     }
-    
+
+
     /**
      * handles the intersect commands
      * 
@@ -204,7 +238,9 @@ public class CommandProcessor {
      */
     private void intersect(String intersectCommand) {
         String[] inputs = intersectCommand.trim().split("\\s+");
-        System.out.println("The following objects intersect (" + inputs[1] + " " + inputs[2] + " " + inputs[3] + " " + inputs[4] + " " + inputs[5] + " " + inputs[6] + "):");
+        System.out.println("The following objects intersect (" + inputs[1] + " "
+            + inputs[2] + " " + inputs[3] + " " + inputs[4] + " " + inputs[5]
+            + " " + inputs[6] + "):");
     }
 
 
