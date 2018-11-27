@@ -1,3 +1,10 @@
+
+/**
+ * Test class for KVPair
+ * @author Christian Carminucci <cdc97> Bob Bao <bob313>
+ * @version 11/20/2018
+ *
+ */
 public class KVPairTest extends student.TestCase {
     
     /**
