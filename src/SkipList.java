@@ -41,10 +41,12 @@ class SkipList<T extends Comparable<T>> {
             }
         }
         x = x.getForward()[0]; // Move to actual record, if it exists
-        if ((x != null) && (x.key().compareTo(key) == 0))
-            return x.element(); // Got it
-        else
-            return null; // Its not there
+        if ((x != null) && (x.key().compareTo(key) == 0)) {
+            return (x.element()); // Got it
+        }
+        else {
+            return (null); // Its not there
+        }
     }
 
 
@@ -55,10 +57,11 @@ class SkipList<T extends Comparable<T>> {
      */
     private int randomLevel() {
         int lev;
-        for (lev = 0; Math.abs(ran.nextInt()) % 2 == 0; lev++) // ran is random
-                                                               // generator
-            ; // Do nothing
-        return lev;
+        for (lev = 0; Math.abs(ran.nextInt()) % 2 == 0; lev++) { // ran is
+                                                                 // random
+                                                                 // generator
+        } // Do nothing
+        return (lev);
     }
 
 
@@ -73,15 +76,17 @@ class SkipList<T extends Comparable<T>> {
     @SuppressWarnings("unchecked")
     public void insert(T key, Object elem) {
         int newLevel = randomLevel(); // New node's level
-        if (newLevel > level) // If new node is deeper
+        if (newLevel > level) { // If new node is deeper
             adjustHead(newLevel); // adjust the header
+        }
         // Track end of level
         SkipNode<T>[] update = new SkipNode[level + 1];
         SkipNode<T> x = head; // Start at header node
         for (int i = level; i >= 0; i--) { // Find insert position
             while ((x.getForward()[i] != null) && (x.getForward()[i].key()
-                .compareTo(key) < 0))
+                .compareTo(key) < 0)) {
                 x = x.getForward()[i];
+            }
             update[i] = x; // Track end at level i
         }
         x = new SkipNode<T>(key, elem, newLevel);
@@ -102,8 +107,9 @@ class SkipList<T extends Comparable<T>> {
     private void adjustHead(int newLevel) {
         SkipNode<T> temp = head;
         head = new SkipNode<T>(null, null, newLevel);
-        for (int i = 0; i <= level; i++)
+        for (int i = 0; i <= level; i++) {
             head.getForward()[i] = temp.getForward()[i];
+        }
         level = newLevel;
     }
 
@@ -172,8 +178,8 @@ class SkipList<T extends Comparable<T>> {
             }
         }
         while (x.getForward()[0] != null && x.getForward()[0].key().compareTo(
-            keyEnd) < 0) {
-            System.out.println(x.toString());
+            keyEnd) <= 0) {
+            System.out.println(x.getForward()[0].toString());
             x = x.getForward()[0];
         }
     }

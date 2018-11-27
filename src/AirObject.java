@@ -139,12 +139,55 @@ public class AirObject implements Comparable<AirObject> {
     public int compareTo(AirObject it) {
         return name.compareTo(it.getName());
     }
-    
+
+
     /**
      * Returns a string containing fields
      */
     public String string() {
-        return (this.getObject().substring(0, 1).toUpperCase() + this.getObject().substring(1) + " " + this.getName() + " " + this.getXorig() + " " + this.getYorig() + " " + this.getZorig() + " " + this.getXwidth() + " " + this.getYwidth() + " " + this.getZwidth());
+        return (this.getObject().substring(0, 1).toUpperCase() + this
+            .getObject().substring(1) + " " + this.getName() + " " + this
+                .getXorig() + " " + this.getYorig() + " " + this.getZorig()
+            + " " + this.getXwidth() + " " + this.getYwidth() + " " + this
+                .getZwidth());
     }
-    
+
+
+    /**
+     * 
+     * @param level
+     *            is which dimension
+     * @return the dimension
+     */
+    public int getDimStart(int level) {
+        if (level == 0) {
+            return xOrig;
+        }
+        else if (level == 1) {
+            return yOrig;
+        }
+        else {
+            return zOrig;
+        }
+    }
+
+
+    /**
+     * 
+     * @param level
+     *            is which dimension
+     * @return the dimension
+     */
+    public int getDimEnd(int level) {
+        if (level == 0) {
+            return (xOrig + xWidth);
+        }
+        else if (level == 1) {
+            return (yOrig + yWidth);
+        }
+        else {
+            return (zOrig + zWidth);
+        }
+    }
+
 }

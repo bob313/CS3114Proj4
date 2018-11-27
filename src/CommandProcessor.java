@@ -13,6 +13,7 @@ import java.util.Scanner;
 
 public class CommandProcessor {
     private SkipList<String> skiplist;
+    private BinTree bin;
 
 
     /**
@@ -31,6 +32,7 @@ public class CommandProcessor {
     public CommandProcessor(String file) {
         Scanner scan = null;
         skiplist = new SkipList<String>();
+        bin = new BinTree();
         try {
             scan = new Scanner(new File(file));
         }
@@ -62,6 +64,10 @@ public class CommandProcessor {
             commandString = commandString.replaceFirst("add", "");
             if (!find(commandString)) {
                 add(commandString);
+            }
+            else {
+                System.out.println("Duplicate object names not permitted: |"
+                    + inputs[2] + "|");
             }
             return true;
         }
@@ -121,43 +127,50 @@ public class CommandProcessor {
      */
     private void add(String addCommand) {
         String[] inputs = addCommand.trim().split("\\s+");
-        if (!(inputs[5].equals("0") || inputs[6].equals("0") || inputs[7]
-            .equals("0"))) {
-            AirObject obj;
-            if (inputs[0].equals("airplane")) {
-                obj = new Airplane(inputs[0], inputs[1], inputs[2], inputs[3],
-                    inputs[4], inputs[5], inputs[6], inputs[7], inputs[8],
-                    inputs[9], inputs[10]);
-            }
-            else if (inputs[0].equals("balloon")) {
-                obj = new Balloon(inputs[0], inputs[1], inputs[2], inputs[3],
-                    inputs[4], inputs[5], inputs[6], inputs[7], inputs[8],
-                    inputs[9]);
-            }
-            else if (inputs[0].equals("rocket")) {
-                obj = new Rocket(inputs[0], inputs[1], inputs[2], inputs[3],
-                    inputs[4], inputs[5], inputs[6], inputs[7], inputs[8],
-                    inputs[9]);
-            }
-            else if (inputs[0].equals("drone")) {
-                obj = new Drone(inputs[0], inputs[1], inputs[2], inputs[3],
-                    inputs[4], inputs[5], inputs[6], inputs[7], inputs[8],
-                    inputs[9]);
-            }
-            else {
-                obj = new Bird(inputs[0], inputs[1], inputs[2], inputs[3],
-                    inputs[4], inputs[5], inputs[6], inputs[7], inputs[8],
-                    inputs[9]);
-            }
-            if (obj.getXorig() + obj.getXwidth() > 0 && obj.getXorig() + obj
-                .getXwidth() <= 1024 && obj.getYorig() + obj.getYwidth() > 0
-                && obj.getYorig() + obj.getYwidth() <= 1024 && obj.getZorig()
-                    + obj.getZwidth() > 0 && obj.getZorig() + obj
-                        .getZwidth() <= 1024) {
-                skiplist.insert(inputs[1], obj);
-                System.out.println(inputs[1]
-                    + " has been added to the database");
-            }
+        AirObject obj;
+        if (inputs[0].equals("airplane")) {
+            obj = new Airplane(inputs[0], inputs[1], inputs[2], inputs[3],
+                inputs[4], inputs[5], inputs[6], inputs[7], inputs[8],
+                inputs[9], inputs[10]);
+        }
+        else if (inputs[0].equals("balloon")) {
+            obj = new Balloon(inputs[0], inputs[1], inputs[2], inputs[3],
+                inputs[4], inputs[5], inputs[6], inputs[7], inputs[8],
+                inputs[9]);
+        }
+        else if (inputs[0].equals("rocket")) {
+            obj = new Rocket(inputs[0], inputs[1], inputs[2], inputs[3],
+                inputs[4], inputs[5], inputs[6], inputs[7], inputs[8],
+                inputs[9]);
+        }
+        else if (inputs[0].equals("drone")) {
+            obj = new Drone(inputs[0], inputs[1], inputs[2], inputs[3],
+                inputs[4], inputs[5], inputs[6], inputs[7], inputs[8],
+                inputs[9]);
+        }
+        else {
+            obj = new Bird(inputs[0], inputs[1], inputs[2], inputs[3],
+                inputs[4], inputs[5], inputs[6], inputs[7], inputs[8],
+                inputs[9]);
+        }
+        if (obj.getXwidth() < 0 || obj.getYwidth() < 0 || obj.getZwidth() < 0) {
+            System.out.println("Bad box (" + inputs[2] + " " + inputs[3] + " "
+                + inputs[4] + " " + inputs[5] + " " + inputs[6] + " "
+                + inputs[7] + "). All widths must be positive.");
+        }
+        else if (obj.getXorig() >= 0 && obj.getXorig() + obj.getXwidth() <= 1024
+            && obj.getYorig() >= 0 && obj.getYorig() + obj.getYwidth() <= 1024
+            && obj.getZorig() >= 0 && obj.getZorig() + obj
+                .getZwidth() <= 1024) {
+            skiplist.insert(inputs[1], obj);
+            bin.insert(obj);
+            System.out.println(inputs[1] + " has been added to the database");
+        }
+        else {
+            System.out.println("Bad box (" + inputs[2] + " " + inputs[3] + " "
+                + inputs[4] + " " + inputs[5] + " " + inputs[6] + " "
+                + inputs[7]
+                + "). All boxes must be entirely within the world box.");
         }
     }
 
@@ -187,6 +200,7 @@ public class CommandProcessor {
         }
         else if (inputs[1].equals("bintree")) {
             System.out.println("Bintree dump:");
+            bin.print(bin.getRoot(), 0);
         }
         else if (inputs[1].equals("object")) {
             printCommand = printCommand.replaceFirst("object", "");
