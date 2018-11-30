@@ -1,4 +1,9 @@
-
+/**
+ * 
+ * @author bob313 cdc97
+ * @version nov 30
+ *
+ */
 public class SkipListTest extends student.TestCase {
 
     /**
@@ -13,8 +18,8 @@ public class SkipListTest extends student.TestCase {
         list.insert("Czarl", 8);
         list.print();
     }
-    
-    
+
+
     /**
      * Tests the delete method
      */
@@ -26,8 +31,8 @@ public class SkipListTest extends student.TestCase {
         assertEquals(25, list.find("Bob"));
         list.insert("Czarl", 8);
         list.print();
-        
-        //begin delete testing
+
+        // begin delete testing
         list.delete("Christian");
         assertNull(list.find("Christian"));
         list.print();

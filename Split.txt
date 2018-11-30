@@ -1,0 +1,6 @@
+   intersect 0 0 -10 1024 1024 1024
+   add balloon B1 258 100 200 10 20 35 hot_air 15
+   add airplane B2 258 100 200 10 20 35 Bair 715 2
+   add airplane B3 257 99 190 20 10 25 USAir 717 4
+add airplane B4 290 180 110 100 100 65 USAir 717 4
+print bintree

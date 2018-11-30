@@ -20,11 +20,24 @@ public class AirObject implements Comparable<AirObject> {
 
 
     /**
-     * Constructor for base AirObject
+     * * Constructor for base AirObject
      * 
+     * @param object
+     *            The object
      * @param inname
-     *            The object's name
-     *
+     *            name
+     * @param xorig
+     *            xorigin
+     * @param yorig
+     *            yorigin
+     * @param zorig
+     *            zorigin
+     * @param xwidth
+     *            xwidth
+     * @param ywidth
+     *            ywidth
+     * @param zwidth
+     *            zwidth
      */
     public AirObject(
         String object,
@@ -143,6 +156,8 @@ public class AirObject implements Comparable<AirObject> {
 
     /**
      * Returns a string containing fields
+     * 
+     * @return a string form
      */
     public String string() {
         return (this.getObject().substring(0, 1).toUpperCase() + this

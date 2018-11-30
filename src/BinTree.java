@@ -7,11 +7,57 @@
  */
 public class BinTree {
 
-    private static int MAX_DIM = 1024;
+    private final static int MAX = 1024;
     private BinNode root;
-    private static LeafNode EMPT_LEAF = new LeafNode();
-    private int depth;
-    private boolean isRoot = false;
+    private final static LeafNode EMPT_LEAF = new LeafNode();
+    private LinkedList<InterNode> interstellar;
+    private LinkedList<AirObject> objectstellar;
+
+
+    /**
+     * used for linked list collisions
+     * 
+     * @author bob313 cdc97
+     * @version nov 28
+     *
+     */
+    public static class InterNode {
+
+        private AirObject box1;
+        private AirObject box2;
+
+
+        /**
+         *
+         * @param b1
+         *            box1
+         * @param b2
+         *            box2
+         */
+        public InterNode(AirObject b1, AirObject b2) {
+            box1 = b1;
+            box2 = b2;
+        }
+
+
+        /**
+         * 
+         * @return box1
+         */
+        public AirObject getBox1() {
+            return box1;
+        }
+
+
+        /**
+         * 
+         * @return box2
+         */
+        public AirObject getBox2() {
+            return box2;
+        }
+
+    }
 
 
     /**
@@ -20,167 +66,52 @@ public class BinTree {
     public BinTree() {
         root = EMPT_LEAF;
         root.setDepth(0);
-        depth = 0;
+// depth = 0;
+        interstellar = new LinkedList<InterNode>();
+        objectstellar = new LinkedList<AirObject>();
     }
 
 
+    /**
+     * 
+     * @return the root
+     */
     public BinNode getRoot() {
         return root;
     }
 
 
+    /**
+     * 
+     * @param obj
+     *            insert airobject
+     */
     public void insert(AirObject obj) {
-        depth = 0;
-        BinNode[] binArr = find(obj, root, root);
-        LeafNode cur = (LeafNode)binArr[1];
-        BinNode prev = binArr[0];
-        if (cur.insertCheck(obj)) {
-            cur.insert(obj);
-        } // split leaf
+        if (root.getClass() == EMPT_LEAF.getClass()) {
+            LeafNode cur = (LeafNode)root;
+            if (cur.size() == 0) {
+                root = new LeafNode();
+            }
+            cur = (LeafNode)root;
+            root = cur.insert(obj, cur, 0, 1024, 1024, 1024, EMPT_LEAF);
+        }
         else {
-            int div = getDivide(obj, depth);
-            splitNode(obj, cur, prev, div);
-            
-        }
-
-//
-// else {
-// int lvl = depth % 3;
-// int div = getDivide(obj, depth);
-// LeafNode left = new LeafNode();
-// LeafNode right = new LeafNode();
-// for (int i = 0; i < cur.size(); i++) {
-// if (cur.getBox(i).getDimStart(lvl) < div) {
-// left.insert(cur.getBox(i));
-// }
-// if (cur.getBox(i).getDimEnd(lvl) >= div) {
-// right.insert(cur.getBox(i));
-// }
-// }
-// if (obj.getDimStart(lvl) < div) {
-// left.insert(obj);
-// }
-// if (obj.getDimEnd(lvl) >= div) {
-// right.insert(obj);
-// }
-// if (left.size() == 0) {
-// left = EMPT_LEAF;
-// }
-// if (right.size() == 0) {
-// right = EMPT_LEAF;
-// }
-// InnerNode innNod = new InnerNode(EMPT_LEAF);
-// innNod.setNode("left", left);
-// innNod.setNode("right", right);
-// if (depth == 0) {
-// root = innNod;
-// }
-// binArr[0].setNode(binArr[0].getState(), innNod);
-// }
-
-    }
-
-    public void splitNode(AirObject obj, LeafNode cur, BinNode prev, int div) {
-        int lvl = depth % 3;
-        
-        LeafNode left = new LeafNode();
-        LeafNode right = new LeafNode();
-        for (int i = 0; i < cur.size(); i++) {
-            if (cur.getBox(i).getDimStart(lvl) < div) {
-                left.insert(cur.getBox(i));
-            }
-            if (cur.getBox(i).getDimEnd(lvl) >= div) {
-                right.insert(cur.getBox(i));
-            }
-        }
-        if (obj != null && obj.getDimStart(lvl) < div) {
-            left.insert(obj);
-        }
-        if (obj != null && obj.getDimEnd(lvl) >= div) {
-            right.insert(obj);
-        }
-        if (left.size() == 0) {
-            left = EMPT_LEAF;
-        }
-        if (right.size() == 0) {
-            right = EMPT_LEAF;
-        }
-        BinNode innNod = new BinNode();
-        innNod.setNode("left", left);
-        innNod.setNode("right", right);
-        if (depth == 0) {
-            root = innNod;
-        }
-        prev.setNode(prev.getState(), innNod);
-        if (left.split() || right.split()) {
-            depth++;
-        }
-        if (left.split()) {
-            int newDiv = div;
-            if (lvl == 2) {
-                newDiv = div - div / 2;
-            }
-            innNod.setState("left");
-            splitNode(null, left, innNod, newDiv);
-        }
-        if (right.split()) {
-            int newDiv = div;
-            if (lvl == 2) {
-                newDiv = div + div / 2;
-            }
-            innNod.setState("right");
-            splitNode(null, right, innNod, newDiv);
+            InnerNode cur = (InnerNode)root;
+            root = cur.insert(obj, cur, 0, 1024, 1024, 1024, EMPT_LEAF);
         }
     }
 
-    public int getDivide(AirObject obj, int depth) {
-        int lvl = depth % 3;
-        int min = 0;
-        int max = MAX_DIM;
-        int mid = 0;
-        for (int i = 0; i <= depth / 3; i++) {
-            mid = (max - min) / 2;
-            if (obj.getDimStart(lvl) >= mid) {
-                min = mid;
-            }
-            else {
-                max = mid;
-            }
 
-        }
-        return mid;
-
-    }
-
-
-    public BinNode[] find(AirObject obj, BinNode current, BinNode previous) {
-        BinNode prev = previous;
-        BinNode cur = current;
-        int dps = depth;
-        int div = getDivide(obj, dps);
-        int lvl = dps % 3;// depth % 3;
-        if (cur.getClass() == EMPT_LEAF.getClass()) {
-            BinNode[] retArr = { prev, cur };
-            return retArr;
-        }
-        if (obj.getDimStart(lvl) < div) {
-            prev = cur;
-            prev.setState("left");
-            cur = cur.getNode("left");
-            depth++;
-            return find(obj, cur, prev);
-        }
-        // if (obj.getDimEnd(lvl) >= div) {
-        prev = cur;
-        prev.setState("right");
-        cur = cur.getNode("right");
-        depth++;
-        return find(obj, cur, prev);
-        // }
-    }
-
-
-    public void print(BinNode node, int deep) {
+    /**
+     * 
+     * @param node
+     *            root or curr node
+     * @param deep
+     *            depth
+     * @return total nodes
+     */
+    public int print(BinNode node, int deep) {
+        int val = 0;
         StringBuilder builder = new StringBuilder();
         if (node != null) {
             for (int i = 0; i < deep; i++) {
@@ -201,14 +132,193 @@ public class BinTree {
                             .toString() + ")");
                     }
                 }
+                return (++val);
             }
             else {
                 builder.append('I');
                 System.out.println(builder.toString());
+                InnerNode cur = (InnerNode)node;
+                val++;
+                val += print(cur.getNode("left"), deep + 1);
+                val += print(cur.getNode("right"), deep + 1);
+                return (val);
             }
-            print(node.getNode("left"), deep + 1);
-            print(node.getNode("right"), deep + 1);
+        }
+        return val;
+    }
+
+
+    /**
+     * 
+     * @param node
+     *            root or current node
+     * @param obj
+     *            is object to check
+     * @param divX
+     *            xdivider
+     * @param divY
+     *            ydivider
+     * @param divZ
+     *            zdivider
+     * @param depth
+     *            how deep
+     * @return total nodes
+     */
+    public int intersectRec(
+        BinNode node,
+        AirObject obj,
+        int divX,
+        int divY,
+        int divZ,
+        int depth) {
+        int val = 0;
+        if (node != null) {
+            if (node.getClass() == EMPT_LEAF.getClass()) {
+                LeafNode leaf = (LeafNode)node;
+                AirObject[] bus = leaf.print();
+                for (int j = 0; j < bus.length; j++) {
+                    if (leaf.intersect(obj, bus[j])) {
+                        if (objectstellar.size() == 0) {
+                            objectstellar.add(bus[j]);
+                        }
+                        else {
+                            if (!objectstellar.contains(bus[j])) {
+                                objectstellar.add(bus[j]);
+                            }
+                        }
+                    }
+                }
+                return (++val);
+            }
+            else {
+                InnerNode cur = (InnerNode)node;
+                val++;
+                int lvl = depth % 3;
+                int div = cur.getDiv(depth, divX, divY, divZ);
+                depth++;
+                if (lvl == 0) {
+                    if (obj.getDimStart(lvl) < div) {
+                        val += intersectRec(cur.getNode("left"), obj, divX
+                            - divX / 2, divY, divZ, depth);
+                    }
+                    if (obj.getDimEnd(lvl) > div) {
+                        val += intersectRec(cur.getNode("right"), obj, divX
+                            + divX / 2, divY, divZ, depth);
+                    }
+                }
+                else if (lvl == 1) {
+                    if (obj.getDimStart(lvl) < div) {
+                        val += intersectRec(cur.getNode("left"), obj, divX, divY
+                            - divY / 2, divZ, depth);
+                    }
+                    if (obj.getDimEnd(lvl) > div) {
+                        val += intersectRec(cur.getNode("right"), obj, divX,
+                            divY + divY / 2, divZ, depth);
+                    }
+                }
+                else {
+                    if (obj.getDimStart(lvl) < div) {
+                        val += intersectRec(cur.getNode("left"), obj, divX,
+                            divY, divZ - divZ / 2, depth);
+                    }
+                    if (obj.getDimEnd(lvl) > div) {
+                        val += intersectRec(cur.getNode("right"), obj, divX,
+                            divY, divZ + divZ / 2, depth);
+                    }
+                }
+                return val;
+            }
+        }
+        return val;
+    }
+
+
+    /**
+     * 
+     * @param node
+     *            root or current node
+     * @param obj
+     *            Airobject to check
+     * @return total nodes
+     */
+    public int intersect(BinNode node, AirObject obj) {
+        objectstellar.clear();
+        int val = this.intersectRec(node, obj, MAX, MAX, MAX, 0);
+        for (int i = 0; i < objectstellar.size(); i++) {
+            System.out.println(objectstellar.get(i).toString());
+        }
+        return val;
+    }
+
+
+    /**
+     * collisions method
+     * 
+     * @param node
+     *            root or curr node
+     * @param deep
+     *            depth
+     */
+    public void collisions(BinNode node, int deep) {
+        boolean add = true;
+        if (node != null) {
+            if (node.getClass() == EMPT_LEAF.getClass()) {
+                LeafNode leaf = (LeafNode)node;
+                if (leaf.size() > 1) {
+                    AirObject[] air = leaf.print();
+                    for (int i = 0; i < air.length; i++) {
+                        for (int j = i + 1; j < air.length; j++) {
+                            if (leaf.intersect(air[i], air[j])) {
+                                if (interstellar.size() == 0) {
+                                    interstellar.add(new InterNode(air[i],
+                                        air[j]));
+                                }
+                                else {
+                                    for (int k = 0; k < interstellar
+                                        .size(); k++) {
+                                        if (interstellar.get(k).getBox1()
+                                            .getName() == air[i].getName()
+                                            && interstellar.get(k).getBox2()
+                                                .getName() == air[j]
+                                                    .getName()) {
+                                            add = false;
+                                        }
+                                    }
+                                    if (add) {
+                                        interstellar.add(new InterNode(air[i],
+                                            air[j]));
+                                        add = true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            else {
+                InnerNode cur = (InnerNode)node;
+                deep++;
+                collisions(cur.getLeft(), deep);
+                collisions(cur.getRight(), deep);
+            }
         }
     }
 
+
+    /**
+     * runs collisions
+     * 
+     * @param node
+     *            root or curr node
+     * @param deep
+     *            depth
+     */
+    public void stellar(BinNode node, int deep) {
+        interstellar.clear();
+        collisions(node, deep);
+        for (int i = 0; i < interstellar.size(); i++) {
+            System.out.println("(" + interstellar.get(i).getBox1().toString()
+                + ") and (" + interstellar.get(i).getBox2().toString());
+        }
+    }
 }

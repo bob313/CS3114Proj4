@@ -21,8 +21,6 @@ public class CommandProcessor {
      * Constructor for CommandProcessor. Takes inputs from main method and
      * processes the commands.
      * 
-     * @param hashSize
-     *            size of Hash received from main method
      * 
      * @param file
      *            the input file containing the commands to be read and
@@ -110,10 +108,7 @@ public class CommandProcessor {
      */
     private boolean find(String findCommand) {
         String[] inputs = findCommand.trim().split("\\s+");
-        if (skiplist.find(inputs[1]) != null) {
-            return true;
-        }
-        return false;
+        return (skiplist.find(inputs[1]) != null);
     }
 
 
@@ -122,8 +117,6 @@ public class CommandProcessor {
      * 
      * @param addCommand
      *            add command string
-     * @return
-     *         true if proper rating
      */
     private void add(String addCommand) {
         String[] inputs = addCommand.trim().split("\\s+");
@@ -200,7 +193,9 @@ public class CommandProcessor {
         }
         else if (inputs[1].equals("bintree")) {
             System.out.println("Bintree dump:");
-            bin.print(bin.getRoot(), 0);
+            System.out.println(bin.print(bin.getRoot(), 0)
+                + " bintree nodes printed");
+
         }
         else if (inputs[1].equals("object")) {
             printCommand = printCommand.replaceFirst("object", "");
@@ -243,8 +238,8 @@ public class CommandProcessor {
      *            collision command string
      */
     private void collisions(String collisionCommand) {
-        String[] inputs = collisionCommand.trim().split("\\s+");
         System.out.println("The following collisions exist in the database:");
+        bin.stellar(bin.getRoot(), 0);
     }
 
 
@@ -259,31 +254,27 @@ public class CommandProcessor {
         System.out.println("The following objects intersect (" + inputs[1] + " "
             + inputs[2] + " " + inputs[3] + " " + inputs[4] + " " + inputs[5]
             + " " + inputs[6] + "):");
-    }
-
-
-    /**
-     * Formats input strings to remove excess spaces and command words (i.e.
-     * update, add, delete)
-     * 
-     * @param nameString
-     *            unformatted string
-     * @return formatted string
-     */
-    private String formatString(String nameString) {
-        StringBuilder newString = new StringBuilder();
-        char[] chars = nameString.toCharArray();
-        for (int i = 0; i < chars.length; i++) {
-            if (!Character.isWhitespace(chars[i])) {
-                while (i < chars.length && !Character.isWhitespace(chars[i])) {
-                    newString.append(chars[i]);
-                    i++;
-                }
-                newString.append(" ");
-            }
+        AirObject obj = new AirObject("temp", "temp", inputs[1], inputs[2],
+            inputs[3], inputs[4], inputs[5], inputs[6]);
+        if (obj.getXwidth() < 0 || obj.getYwidth() < 0 || obj.getZwidth() < 0) {
+            System.out.println("Bad box (" + inputs[1] + " " + inputs[2] + " "
+                + inputs[3] + " " + inputs[4] + " " + inputs[5] + " "
+                + inputs[6] + "). All widths must be positive.");
         }
-        newString.deleteCharAt(newString.length() - 1);
-        return newString.toString();
+        else if (obj.getXorig() < 0 && obj.getXorig() + obj.getXwidth() > 1024
+            && obj.getYorig() < 0 && obj.getYorig() + obj.getYwidth() > 1024
+            && obj.getZorig() < 0 && obj.getZorig() + obj.getZwidth() > 1024) {
+            System.out.println("Bad box (" + inputs[1] + " " + inputs[2] + " "
+                + inputs[3] + " " + inputs[4] + " " + inputs[5] + " "
+                + inputs[6]
+                + "). All boxes must be entirely within the world box.");
+        }
+        else {
+            int val = bin.intersect(bin.getRoot(), obj);
+            // if (val > 0) {
+            System.out.println(val + " nodes were visited in the bintree");
+            // }
+        }
     }
 
 }

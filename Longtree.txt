@@ -1,0 +1,9 @@
+ add    airplane Air2 100 1010 101 1020 102 1030 Delta 17 2
+  add    airplane Air3 100 1010 101 -1020 102 1030 Delta 17 2
+ 
+   add balloon B1 0 1 1 1 2 1 hot_air 15
+   add airplane Air 0 1 1 1 2 1 Bair 715 2
+   add airplane Air1 0 0 1 2 2 3 USAir 717 4
+add    airplane Air2 0 0 1 24 20 90 Delta 17 2
+add    airplane Air3 10 10 11 924 920 990 Beta 27 1
+print bintree

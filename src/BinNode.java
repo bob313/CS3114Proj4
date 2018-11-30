@@ -7,29 +7,36 @@
 public class BinNode {
     private int depth = 0;
     private String state;
-    private BinNode left;
-    private BinNode right;
 
 
+    /**
+     * Bin node!
+     */
     public BinNode() {
-        
+        // none needed
     }
-    
+
+
+    /**
+     * sets depth
+     * 
+     * @param deep
+     *            depth
+     */
     public void setDepth(int deep) {
         depth = deep;
     }
-    
+
+
+    /**
+     * gets the depth of node
+     * 
+     * @return depth
+     */
     public int getDepth() {
         return depth;
     }
 
-    public BinNode getLeft() {
-        return left;
-    }
-    
-    public BinNode getRight() {
-        return right;
-    }
 
     /**
      * set the state of the node
@@ -53,33 +60,27 @@ public class BinNode {
 
     /**
      * 
-     * @param which
-     *            value to set
-     * @param value
-     *            to set leaf node
+     * @param deep
+     *            to calc level
+     * @param x
+     *            to find xdiv
+     * @param y
+     *            to find ydiv
+     * @param z
+     *            to find zdiv
+     * @return the div
      */
-    public void setNode(String which, BinNode value) {
-        if (which == "left") {
-            left = value;
+    public int getDiv(int deep, int x, int y, int z) {
+        int lvl = deep % 3;
+        if (lvl == 0) {
+            return x / 2;
+        }
+        else if (lvl == 1) {
+            return y / 2;
         }
         else {
-            right = value;
+            return z / 2;
         }
     }
-
-
-    /**
-     * 
-     * @param which
-     *            node to get
-     * @return the node desired
-     */
-    public BinNode getNode(String which) {
-        if (which == "left") {
-            return getLeft();
-        }
-        return right;
-    }
-
 
 }

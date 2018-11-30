@@ -12,6 +12,7 @@ public class AirControlTest extends TestCase {
         // Nothing Here
     }
 
+
     /**
      * Get code coverage of the class declaration.
      */
@@ -20,13 +21,16 @@ public class AirControlTest extends TestCase {
         assertNotNull(recstore);
         AirControl.main(null);
     }
-    
+
+
     /**
      * Get code coverage for AirObject class
      */
     public void testAO() {
-        AirObject ao = new AirObject("airplane", "myName", "0", "0", "0", "1", "1", "1");
-        AirObject ao2 = new AirObject("airplane", "myName2", "1", "2", "3", "1", "2", "3");
+        AirObject ao = new AirObject("airplane", "myName", "0", "0", "0", "1",
+            "1", "1");
+        AirObject ao2 = new AirObject("airplane", "myName2", "1", "2", "3", "1",
+            "2", "3");
         assertTrue((ao.getName()).equals("myName"));
         assertEquals(ao.getXorig(), 0);
         assertEquals(ao.getYorig(), 0);
@@ -36,7 +40,8 @@ public class AirControlTest extends TestCase {
         assertEquals(ao.getZwidth(), 1);
         assertTrue(ao.compareTo(ao2) < 0);
     }
-    
+
+
     /**
      * Get code coverage of the class declaration.
      */
@@ -46,5 +51,39 @@ public class AirControlTest extends TestCase {
         AirControl.main(null);
         String[] trial = { "P4SampleInput.txt" };
         AirControl.main(trial);
+    }
+
+
+    /**
+     * tests a long tree
+     */
+    public void testsplit() {
+        AirControl recstore = new AirControl();
+        assertNotNull(recstore);
+        AirControl.main(null);
+        String[] trial = { "Longtree.txt" };
+        AirControl.main(trial);
+    }
+
+
+    /**
+     * tests many insertions
+     */
+    public void testMany() {
+        AirControl recstore = new AirControl();
+        assertNotNull(recstore);
+        String[] test = { "Many.txt" };
+        AirControl.main(test);
+    }
+
+
+    /**
+     * tests split
+     */
+    public void testSplit() {
+        AirControl recstore = new AirControl();
+        assertNotNull(recstore);
+        String[] test = { "Split.txt" };
+        AirControl.main(test);
     }
 }

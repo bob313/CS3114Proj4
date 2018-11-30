@@ -40,6 +40,15 @@ public class LinkedList<E> implements LList<E> {
 
 
     /**
+     * clears list
+     */
+    public void clear() {
+        size = 0;
+        head = null;
+    }
+
+
+    /**
      * Adds the object to the position in the list
      *
      * @precondition obj cannot be null
