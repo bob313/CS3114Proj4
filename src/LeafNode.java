@@ -78,10 +78,13 @@ public class LeafNode extends BinNode {
         return (splitter(obj, cur, depth, x, y, z, empt));
     }
 
-/**
- * insert into list 
- * @param obj object to insert into list
- */
+
+    /**
+     * insert into list
+     * 
+     * @param obj
+     *            object to insert into list
+     */
     public void insert(AirObject obj) {
         boxes.add(obj);
     }
@@ -196,6 +199,15 @@ public class LeafNode extends BinNode {
 
     /**
      * 
+     * @return boxes list
+     */
+    public LinkedList<AirObject> getBoxes() {
+        return boxes;
+    }
+
+
+    /**
+     * 
      * @return true if box needs to be split
      */
     public boolean split() {
@@ -222,44 +234,18 @@ public class LeafNode extends BinNode {
      * @return true if it does intersect
      */
     public boolean intersect(AirObject obj, AirObject box) {
-//        boolean x1 = obj.getXorig() + obj.getXwidth() <= box.getXorig();
-//        boolean x2 = obj.getXorig() >= box.getXorig() + box.getXwidth();
-//        boolean y1 = obj.getYorig() + obj.getYwidth() <= box.getYorig();
-//        boolean y2 = obj.getYorig() >= box.getYorig() + box.getYwidth();
-//        boolean z1 = obj.getZorig() + obj.getZwidth() <= box.getZorig();
-//        boolean z2 = obj.getZorig() >= box.getZorig() + box.getZwidth();
-        return !(obj.getXorig() + obj.getXwidth() < box.getXorig() || obj
-            .getXorig() > box.getXorig() + box.getXwidth() || obj.getYorig()
-                + obj.getYwidth() < box.getYorig() || obj.getYorig() > box
+// boolean x1 = obj.getXorig() + obj.getXwidth() <= box.getXorig();
+// boolean x2 = obj.getXorig() >= box.getXorig() + box.getXwidth();
+// boolean y1 = obj.getYorig() + obj.getYwidth() <= box.getYorig();
+// boolean y2 = obj.getYorig() >= box.getYorig() + box.getYwidth();
+// boolean z1 = obj.getZorig() + obj.getZwidth() <= box.getZorig();
+// boolean z2 = obj.getZorig() >= box.getZorig() + box.getZwidth();
+        return !(obj.getXorig() + obj.getXwidth() <= box.getXorig() || obj
+            .getXorig() >= box.getXorig() + box.getXwidth() || obj.getYorig()
+                + obj.getYwidth() <= box.getYorig() || obj.getYorig() >= box
                     .getYorig() + box.getYwidth() || obj.getZorig() + obj
-                        .getZwidth() < box.getZorig() || obj.getZorig() > box
+                        .getZwidth() <= box.getZorig() || obj.getZorig() >= box
                             .getZorig() + box.getZwidth());
-    }
-
-
-    /**
-     * sort an array
-     * 
-     * @param arr
-     *            array to be sorted
-     */
-    public void sort(AirObject[] arr) {
-        int n = arr.length;
-        for (int i = 1; i < n; ++i) {
-            AirObject key = arr[i];
-            int j = i - 1;
-
-            /*
-             * Move elements of arr[0..i-1], that are
-             * greater than key, to one position ahead
-             * of their current position
-             */
-            while (j >= 0 && arr[j].compareTo(key) > 0) {
-                arr[j + 1] = arr[j];
-                j = j - 1;
-            }
-            arr[j + 1] = key;
-        }
     }
 
 
@@ -297,38 +283,16 @@ public class LeafNode extends BinNode {
 
 
     /**
-     * calcs closest to origin
      * 
+     * @param name
+     *            name of object to delete
      * @param depth
-     *            depth currently
-     * @return array of airobjects ordered by closest to origin
+     *            current depth
+     * @param cur
+     *            current node
+     * @return the new innernode
      */
-    public AirObject[] origin(int depth) {
-        AirObject[] air = array();
-        int n = air.length;
-        for (int i = 1; i < n; ++i) {
-            AirObject key = air[i];
-            int j = i - 1;
-            if (depth % 3 == 0) {
-                while (j >= 0 && air[j].getXorig() < air[i].getXorig()) {
-                    air[j + 1] = air[j];
-                    j = j - 1;
-                }
-            }
-            else if (depth % 3 == 1) {
-                while (j >= 0 && air[j].getYorig() < air[i].getYorig()) {
-                    air[j + 1] = air[j];
-                    j = j - 1;
-                }
-            }
-            else {
-                while (j >= 0 && air[j].getZorig() < air[i].getZorig()) {
-                    air[j + 1] = air[j];
-                    j = j - 1;
-                }
-            }
-            air[j + 1] = key;
-        }
-        return air;
+    public BinNode delete(AirObject obj, int depth, BinNode cur) {
+
     }
 }

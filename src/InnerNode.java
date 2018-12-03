@@ -138,5 +138,16 @@ public class InnerNode extends BinNode {
         }
         return nod;
     }
+    
+    /**
+     * 
+     * @param name name of object to remove
+     * @param depth int o
+     * @param cur
+     * @return
+     */
+    public BinNode delete(AirObject obj, int depth, BinNode cur) {
+        
+    }
 
 }

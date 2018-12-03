@@ -104,6 +104,25 @@ public class BinTree {
 
     /**
      * 
+     * @param obj
+     *            delete airojbect
+     */
+    public void delete(AirObject obj) {
+        if (root.getClass() == EMPT_LEAF.getClass()) {
+            LeafNode cur = (LeafNode)root;
+            if (cur.getBoxes().contains(obj)) {
+                root = cur.delete(obj, 0, root);
+            }
+        }
+        else {
+            InnerNode cur = (InnerNode)root;
+            root = cur.delete(obj, 0, root);
+        }
+    }
+
+
+    /**
+     * 
      * @param node
      *            root or curr node
      * @param deep
@@ -318,7 +337,7 @@ public class BinTree {
         collisions(node, deep);
         for (int i = 0; i < interstellar.size(); i++) {
             System.out.println("(" + interstellar.get(i).getBox1().toString()
-                + ") and (" + interstellar.get(i).getBox2().toString());
+                + ") and (" + interstellar.get(i).getBox2().toString() + ")");
         }
     }
 }

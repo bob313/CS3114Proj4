@@ -5,4 +5,5 @@ add    airplane Air 10 10 11 924 920 990 Beta 27 1
 
 add    airplane B4 600 600 601 24 20 90 Delta 17 2
 add balloon Cloud 900 900 900 100 100 100 ba 24
+   intersect 0 0 10 1024 1024 1024
 print bintree

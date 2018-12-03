@@ -86,4 +86,14 @@ public class AirControlTest extends TestCase {
         String[] test = { "Split.txt" };
         AirControl.main(test);
     }
+    
+    /**
+     * tests intersect
+     */
+    public void testIntersect() {
+        AirControl recstore = new AirControl();
+        assertNotNull(recstore);
+        String[] test = { "Intersect.txt" };
+        AirControl.main(test);
+    }
 }

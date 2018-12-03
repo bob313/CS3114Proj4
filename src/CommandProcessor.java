@@ -251,29 +251,29 @@ public class CommandProcessor {
      */
     private void intersect(String intersectCommand) {
         String[] inputs = intersectCommand.trim().split("\\s+");
-        System.out.println("The following objects intersect (" + inputs[1] + " "
-            + inputs[2] + " " + inputs[3] + " " + inputs[4] + " " + inputs[5]
-            + " " + inputs[6] + "):");
         AirObject obj = new AirObject("temp", "temp", inputs[1], inputs[2],
             inputs[3], inputs[4], inputs[5], inputs[6]);
-        if (obj.getXwidth() < 0 || obj.getYwidth() < 0 || obj.getZwidth() < 0) {
+        if (obj.getXwidth() <= 0 || obj.getYwidth() <= 0 || obj
+            .getZwidth() <= 0) {
             System.out.println("Bad box (" + inputs[1] + " " + inputs[2] + " "
                 + inputs[3] + " " + inputs[4] + " " + inputs[5] + " "
                 + inputs[6] + "). All widths must be positive.");
         }
-        else if (obj.getXorig() < 0 && obj.getXorig() + obj.getXwidth() > 1024
-            && obj.getYorig() < 0 && obj.getYorig() + obj.getYwidth() > 1024
-            && obj.getZorig() < 0 && obj.getZorig() + obj.getZwidth() > 1024) {
+        else if (obj.getXorig() >= 0 && obj.getXorig() + obj.getXwidth() <= 1024
+            && obj.getYorig() >= 0 && obj.getYorig() + obj.getYwidth() <= 1024
+            && obj.getZorig() >= 0 && obj.getZorig() + obj
+                .getZwidth() <= 1024) {
+            System.out.println("The following objects intersect (" + inputs[1]
+                + " " + inputs[2] + " " + inputs[3] + " " + inputs[4] + " "
+                + inputs[5] + " " + inputs[6] + "):");
+            int val = bin.intersect(bin.getRoot(), obj);
+            System.out.println(val + " nodes were visited in the bintree");
+        }
+        else {
             System.out.println("Bad box (" + inputs[1] + " " + inputs[2] + " "
                 + inputs[3] + " " + inputs[4] + " " + inputs[5] + " "
                 + inputs[6]
                 + "). All boxes must be entirely within the world box.");
-        }
-        else {
-            int val = bin.intersect(bin.getRoot(), obj);
-            // if (val > 0) {
-            System.out.println(val + " nodes were visited in the bintree");
-            // }
         }
     }
 
