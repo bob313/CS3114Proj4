@@ -176,7 +176,9 @@ public class CommandProcessor {
      */
     private void delete(String deleteCommand) {
         String[] inputs = deleteCommand.trim().split("\\s+");
+        AirObject obj = (AirObject)skiplist.find(inputs[1]);
         skiplist.delete(inputs[1]);
+        bin.delete(obj);
     }
 
 
