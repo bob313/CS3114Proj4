@@ -16,6 +16,7 @@ public class InnerNode extends BinNode {
      * 
      */
     public InnerNode() {
+        empty = new LeafNode();
         left = empty;
         right = empty;
     }
