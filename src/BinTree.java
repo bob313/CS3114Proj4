@@ -111,7 +111,10 @@ public class BinTree {
         if (root.getClass() == EMPT_LEAF.getClass()) {
             LeafNode cur = (LeafNode)root;
             if (cur.getBoxes().contains(obj)) {
-                root = cur.delete(obj, 0, root);
+                cur.delete(obj);
+            }
+            if (cur.getBoxes().size() == 0) {
+                root = EMPT_LEAF;
             }
         }
         else {
