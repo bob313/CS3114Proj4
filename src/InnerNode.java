@@ -147,8 +147,30 @@ public class InnerNode extends BinNode {
      * @return
      */
     public BinNode delete(AirObject obj, int depth, BinNode cur) {
+        if (left.getClass() != empty.getClass()) {
+            InnerNode inLeft = (InnerNode)left;
+            left = inLeft.delete(obj, depth + 1, this);
+        }
+        if (right.getClass() != empty.getClass()) {
+            InnerNode inRight = (InnerNode)right;
+            right = inRight.delete(obj, depth + 1, this);
+        }
+        if (left.getClass() == empty.getClass()) {
+            LeafNode lefLeft = (LeafNode)left;
+            lefLeft.delete(obj);
+            
+        }
+        if (right.getClass() == empty.getClass()) {
+            LeafNode lefRight = (LeafNode)right;
+            lefRight.delete(obj);
+        }
+        if (left.getClass() == empty.getClass() && right.getClass() == empty.getClass()) {
+            return merge(depth, this);
+        }
+        return this;
         
     }
+
 
     public BinNode merge(int dpeth, BinNode curr) {
         InnerNode cur = (InnerNode) curr;
@@ -178,4 +200,5 @@ public class InnerNode extends BinNode {
         }
         return curr;
     }
+
 }
