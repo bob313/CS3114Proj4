@@ -1,0 +1,36 @@
+/**
+ * Tests methods of the InnerNode Class
+ * 
+ * @author Christian Carminucci <cdc97> Bob Bao <bob313>
+ * @version 12/4/2018
+ */
+public class InnerNodeTest extends student.TestCase {
+
+    /**
+     * Tests the delete method for InnerNode
+     */
+    public void testDelete() {
+        BinTree tre = new BinTree();
+        AirObject aObj1 = new AirObject("Airplane", "A1", "256", "20", "20",
+            "512", "200", "200");
+        AirObject aObj2 = new AirObject("Airplane", "A2", "256", "20", "20",
+            "512", "200", "200");
+        AirObject aObj3 = new AirObject("Airplane", "A3", "256", "20", "20",
+            "512", "200", "200");
+        AirObject aObj4 = new AirObject("Airplane", "A4", "256", "20", "615",
+            "512", "200", "200");
+        tre.insert(aObj1);
+        tre.insert(aObj2);
+        tre.insert(aObj3);
+        tre.insert(aObj4);
+        AirObject sectObj = new AirObject("Airplane", "ATest", "900", "900",
+            "615", "10", "20", "300");
+        tre.insert(sectObj);
+        AirObject betSect = new AirObject("Drone", "BetTest", "900", "900",
+            "900", "11", "21", "25");
+        assertTrue(tre.intersect(tre.getRoot(), betSect) > 0);
+        tre.delete(sectObj);
+        assertEquals(3, tre.intersect(tre.getRoot(), betSect));
+    }
+
+}
