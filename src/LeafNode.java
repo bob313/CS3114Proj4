@@ -292,8 +292,7 @@ public class LeafNode extends BinNode {
      *            current node
      * @return the new innernode
      */
-    public BinNode delete(AirObject obj, int depth, BinNode cur) {
-
+    public void delete(AirObject obj) {
+        boxes.remove(obj);
     }
-    
 }
