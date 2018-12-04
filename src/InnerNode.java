@@ -33,6 +33,7 @@ public class InnerNode extends BinNode {
 
 
     /**
+     * Gets the right child
      * 
      * @return right node
      */
@@ -42,6 +43,7 @@ public class InnerNode extends BinNode {
 
 
     /**
+     * Sets the node as a left child or right child
      * 
      * @param which
      *            value to set
@@ -59,6 +61,7 @@ public class InnerNode extends BinNode {
 
 
     /**
+     * gets if the node is a left child or a right child
      * 
      * @param which
      *            node to get
@@ -73,22 +76,23 @@ public class InnerNode extends BinNode {
 
 
     /**
+     * Inserts and object into the child nodes of the current node
      * 
      * @param obj
      *            object to insert
      * @param nod
      *            current node
      * @param depth
-     *            deep
+     *            the depth of the node
      * @param x
-     *            val
+     *            the divider for x
      * @param y
-     *            val
+     *            the divider for y
      * @param z
-     *            val
+     *            the divider for z
      * @param empt
-     *            empty
-     * @return node
+     *            the empty node
+     * @return node the inserted node
      */
     public BinNode insert(
         AirObject obj,
@@ -139,13 +143,18 @@ public class InnerNode extends BinNode {
         }
         return nod;
     }
-    
+
+
     /**
+     * Deletes given AirObject from all child nodes
      * 
-     * @param name name of object to remove
-     * @param depth int o
+     * @param obj
+     *            the object to be deleted from the child nodes
+     * @param depth
+     *            depth of the node
      * @param cur
-     * @return
+     *            the current node
+     * @return itself or the replacement merged node
      */
     public BinNode delete(AirObject obj, int depth, BinNode cur) {
         if (left.getClass() != empty.getClass()) {
@@ -159,35 +168,41 @@ public class InnerNode extends BinNode {
         if (left.getClass() == empty.getClass()) {
             LeafNode lefLeft = (LeafNode)left;
             lefLeft.delete(obj);
-            
+
         }
         if (right.getClass() == empty.getClass()) {
             LeafNode lefRight = (LeafNode)right;
             lefRight.delete(obj);
         }
-        if (left.getClass() == empty.getClass() && right.getClass() == empty.getClass()) {
+        if (left.getClass() == empty.getClass() && right.getClass() == empty
+            .getClass()) {
             return merge(depth, this);
         }
         return this;
-        
+
     }
 
 
+    /**
+     * Merges child nodes into one leaf node if they meet requirements
+     * 
+     * @param dpeth
+     *            the depth of the node
+     * @param curr
+     *            the current node
+     * @return the current node if merging not required the merged node if it is
+     */
     public BinNode merge(int dpeth, BinNode curr) {
-        InnerNode cur = (InnerNode) curr;
-        if (cur.getLeft().getClass() == empty.getClass() && cur.getRight().getClass() == empty.getClass()) {
-            LeafNode left = (LeafNode) cur.getLeft();
-            LeafNode right = (LeafNode) cur.getRight();
-//            for (int i = 0; i<left.getBoxes().size(); i++) {
-//                if (!right.insertCheck(left.getBox(i))) {
-//                    return curr;
-//                }
-//            }
+        InnerNode cur = (InnerNode)curr;
+        if (cur.getLeft().getClass() == empty.getClass() && cur.getRight()
+            .getClass() == empty.getClass()) {
+            LeafNode left = (LeafNode)cur.getLeft();
+            LeafNode right = (LeafNode)cur.getRight();
             LeafNode node = new LeafNode();
-            for (int i=0; i<left.getBoxes().size(); i++) {
+            for (int i = 0; i < left.getBoxes().size(); i++) {
                 node.insert(left.getBox(i));
             }
-            for (int i=0; i<right.getBoxes().size(); i++) {
+            for (int i = 0; i < right.getBoxes().size(); i++) {
                 if (!node.getBoxes().contains(right.getBox(i))) {
                     if (node.insertCheck(right.getBox(i))) {
                         node.insert(right.getBox(i));
