@@ -6,4 +6,12 @@ add airplane B4 290 180 110 100 100 65 USAir 717 4
 intersect 0 0 0 0 1 1
 intersect 0 0 0 1 1 0
 intersect 0 0 0 1 0 1
+
+intersect -10 10 10 1 10 1
+intersect 10 -10 10 1 10 1
+intersect 10 10 -10 1 10 1
+intersect 9910 10 10 1 10 1
+intersect 10 9910 10 1 10 1
+intersect 10 10 9910 1 10 1
 print bintree
+collisions

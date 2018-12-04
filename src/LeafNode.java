@@ -284,13 +284,8 @@ public class LeafNode extends BinNode {
 
     /**
      * 
-     * @param name
+     * @param obj
      *            name of object to delete
-     * @param depth
-     *            current depth
-     * @param cur
-     *            current node
-     * @return the new innernode
      */
     public void delete(AirObject obj) {
         boxes.remove(obj);

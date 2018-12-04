@@ -1,9 +1,31 @@
-   add balloon B1 600 601 601 300 300 300 hot_air 15
+delete B1   
+add balloon B1 600 601 601 300 300 300 hot_air 15
+delete B2
+delete B1
+add airplane B4 60 60 61 24 20 90 Delta 17 2
+collisions
+delete B4
+add balloon B1 600 601 601 300 300 300 hot_air 15
    add airplane B2 600 601 601 300 300 300 Bair 715 2
+   add airplane B3 600 600 601 300 300 300 USAir 717 4
+delete B3
    add airplane B3 600 600 601 300 300 300 USAir 717 4
 add    airplane Air 10 10 11 924 920 990 Beta 27 1
 
 add    airplane B4 600 600 601 24 20 90 Delta 17 2
 add balloon Cloud 900 900 900 100 100 100 ba 24
+add balloon Cl 900 900 90 100 100 100 ba 24
+delete Cl
+add balloon Cl 900 900 90 100 100 100 ba 24
+add balloon Fake1 900 900 90 -100 100 100 ba 24
+add balloon Fake2 900 900 90 100 -100 100 ba 24
+add balloon Fake3 900 900 90 100 100 -100 ba 24
+add balloon Fake4 -900 900 90 100 100 100 ba 24
+add balloon Fake5 900 -900 90 100 100 100 ba 24
+add balloon Fake6 900 900 -90 100 100 100 ba 24
+add balloon Fake 1900 900 90 100 100 100 ba 24
+add balloon Fake 900 1900 90 100 100 100 ba 24
+add balloon Fake 900 900 1190 100 100 100 ba 24
    intersect 0 0 10 1024 1024 1024
 print bintree
+collisions

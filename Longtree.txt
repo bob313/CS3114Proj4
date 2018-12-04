@@ -7,3 +7,4 @@
 add    airplane Air2 0 0 1 24 20 90 Delta 17 2
 add    airplane Air3 10 10 11 924 920 990 Beta 27 1
 print bintree
+collisions

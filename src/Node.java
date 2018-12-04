@@ -19,8 +19,6 @@ public class Node<D> {
     // The next node in the sequence.
     private Node<D> next;
 
-    private InnerListNode<D> innerNext;
-
 
     /**
      * Creates a new node with the given data
@@ -51,26 +49,6 @@ public class Node<D> {
      */
     public Node<D> next() {
         return next;
-    }
-
-
-    /**
-     * Sets the inner nodes
-     * 
-     * @param inner
-     *            sets what the inner node is
-     */
-    public void setInnerNode(InnerListNode<D> inner) {
-        innerNext = inner;
-    }
-
-
-    /**
-     * 
-     * @return the innerNode
-     */
-    public InnerListNode<D> getInnerNode() {
-        return innerNext;
     }
 
 

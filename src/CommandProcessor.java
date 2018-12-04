@@ -199,7 +199,8 @@ public class CommandProcessor {
                 + " bintree nodes printed");
 
         }
-        else if (inputs[1].equals("object")) {
+        // else if (inputs[1].equals("object")) {
+        else {
             printCommand = printCommand.replaceFirst("object", "");
             if (!find(printCommand)) {
                 System.out.println("|" + inputs[2]
