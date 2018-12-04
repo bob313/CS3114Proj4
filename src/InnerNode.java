@@ -150,4 +150,32 @@ public class InnerNode extends BinNode {
         
     }
 
+    public BinNode merge(int dpeth, BinNode curr) {
+        InnerNode cur = (InnerNode) curr;
+        if (cur.getLeft().getClass() == empty.getClass() && cur.getRight().getClass() == empty.getClass()) {
+            LeafNode left = (LeafNode) cur.getLeft();
+            LeafNode right = (LeafNode) cur.getRight();
+//            for (int i = 0; i<left.getBoxes().size(); i++) {
+//                if (!right.insertCheck(left.getBox(i))) {
+//                    return curr;
+//                }
+//            }
+            LeafNode node = new LeafNode();
+            for (int i=0; i<left.getBoxes().size(); i++) {
+                node.insert(left.getBox(i));
+            }
+            for (int i=0; i<right.getBoxes().size(); i++) {
+                if (!node.getBoxes().contains(right.getBox(i))) {
+                    if (node.insertCheck(right.getBox(i))) {
+                        node.insert(right.getBox(i));
+                    }
+                    else {
+                        return curr;
+                    }
+                }
+            }
+            return node;
+        }
+        return curr;
+    }
 }
