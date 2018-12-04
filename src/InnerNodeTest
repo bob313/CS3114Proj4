@@ -26,11 +26,9 @@ public class InnerNodeTest extends student.TestCase {
         AirObject sectObj = new AirObject("Airplane", "ATest", "900", "900",
             "615", "10", "20", "300");
         tre.insert(sectObj);
-        AirObject betSect = new AirObject("Drone", "BetTest", "900", "900",
-            "900", "11", "21", "25");
-        assertTrue(tre.intersect(tre.getRoot(), betSect) > 0);
-        tre.delete(sectObj);
-        assertEquals(3, tre.intersect(tre.getRoot(), betSect));
+        assertEquals(7, tre.intersect(tre.getRoot(), aObj4));
+        tre.delete(aObj4);
+        assertEquals(4, tre.intersect(tre.getRoot(), aObj4));
     }
 
 }
